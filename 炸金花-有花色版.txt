@@ -1,0 +1,35 @@
+'''
+this is a poker gambling game popular in China.every player gets three cards and the bigger wins
+three cards of same name--same colors--three cards in a row--two cards of ssame number
+the above is the simple rule and the programme will be shown in the other file
+'''
+class Game():
+    def zhajinhua_color(self,n):
+        cards=[2,3,4,5,6,7,8,9,10,'J','Q','K','A']
+        cards_color=[]
+        for i in range(13):
+            cards_color+=[str(cards[i])+'-Hearts']
+            cards_color+=[str(cards[i])+'-Spades']
+            cards_color+=[str(cards[i])+'-Dimonds']
+            cards_color+=[str(cards[i])+'-Clubs']
+        import random
+        for i in range(n):
+            output=[]
+            for j in range(3):
+                x=random.choice(cards_color)
+                for k in range(len(cards_color)):
+                    if x==cards_color[k]:
+                        if k==0:
+                            cards_color=cards_color[1:]
+                        elif k==len(cards_color)-1:
+                            cards_color=cards_color[:-1]
+                        else:
+                            cards_color=cards_color[:k]+cards_color[k+1:]
+                        break
+                output+=[x]
+            print('Cards for player %d is %s'%(i+1,output))
+        return 
+
+play=Game()
+play.zhajinhua_color(3)
+

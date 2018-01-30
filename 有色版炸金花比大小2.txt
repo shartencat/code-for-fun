@@ -1,0 +1,44 @@
+#basic rule:xxx>same colors(three)>number in a row>xxy>wxz
+class zhajinhua_color():
+    def Winner(self,cards_in_hands,n):
+        cards=['2','3','4','5','6','7','8','9','1','J','Q','K','A']
+        cards_to_num={}
+        for i in range(13):
+            cards_to_num[cards[i]]=i  #dictionary
+        big_u,p=['1','3','1','0'],0
+        for i in range(n):
+            cards_in_hand=cards_in_hands[i]
+            x1,x2,x3=cards_to_num[cards_in_hand[0][0]],cards_to_num[cards_in_hand[1][0]],cards_to_num[cards_in_hand[2][0]]
+            seq=sorted([x1,x2,x3])
+            x1,x2,x3=seq[0],seq[1],seq[2] #sequencing
+            if x1==x2==x3: #'AAA'
+                u=['5']+['%d'%x1]
+            elif cards_in_hand[0][-2]==cards_in_hand[1][-2]==cards_in_hand[2][-2]: #'same color'
+                u=['4']
+                if x3-x2==x2-x1==1:  #'456'
+                    u+=['3']+['%d'%x3]
+                elif x1==x2:        #'557'
+                    u+=['2']+['%d'%x2]+['%d'%x3]
+                elif x2==x3:        #554
+                    u+=['2']+['%d'%x2]+['%d'%x1]
+                else:
+                    u+=['1']+['%d'%x3]+['%d'%x2]+['%d'%x1]
+            elif x3-x2==x2-x1==1:   #456
+                u=['3']+['%d'%x3]
+            elif x1==x2:       #556
+                u=['2']+['%d'%x2]+['%d'%x3]
+            elif x2==x3:      #554
+                u=['2']+['%d'%x2]+['%d'%x1]
+            else:       #235
+                u=['1']+['%d'%x3]+['%d'%x2]+['%d'%x1]
+            count_u=min(len(big_u),len(u))
+            for j in range(count_u):
+                if u[j]>big_u[j]:
+                    big_u=u
+                    p=i
+                    break
+        return ['the winner is player %d'%(p+1)]
+
+trans=zhajinhua_color()
+trans.Winner([['Q-Dimonds', 'K-Dimonds', '7-Hearts'],['2-Clubs', '3-Spades', 'Q-Clubs'],['4-Clubs', 'Q-Hearts', 'A-Clubs']],3)
+trans.Winner([['2-Clubs', '3-Spades', 'Q-Clubs'],['J-Spades', 'A-Dimonds', '4-Hearts'],['7-Dimonds', '9-Dimonds', '8-Spades']],3)
