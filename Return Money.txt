@@ -1,0 +1,25 @@
+#20 people; lend money to others but not lend more than one time; clear at last;let dollars change as few as possible
+class Solution:
+    def returnMoney(self):
+        import random
+        import string
+        abc=list(string.ascii_uppercase)[0:20]
+        len_bor,lender,borrower=[],[],[]
+        for i in range(20):
+            if random.randint(0,1)==1:
+                x=random.choice(abc[:i]+abc[i+1:])
+                len_bor+=[[abc[i],x]]
+        for j in range(len(len_bor)):
+            for k in range(len(len_bor)):
+                if len_bor[j][0]==len_bor[k][1]:
+                    len_bor[j][0],len_bor[k][1]=0,0
+        for l in range(len(len_bor)):
+            if len_bor[l][0]!=0:
+                lender+=len_bor[l][0]
+            if len_bor[l][1]!=0:
+                borrower+=len_bor[l][1]
+        for m in range(len(lender)):
+            print('%s <- %s'%(lender[m],borrower[m]))
+
+test=Solution()
+test.returnMoney()
